@@ -1,0 +1,42 @@
+<!-- main.hbs-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>MLB Database App</title>
+    <link rel="icon" type="image/x-icon" href="/img/mlb-fav.ico"/>
+    <link rel="stylesheet" href="/css/style.css" media="all"/>
+</head>
+
+<body>
+    <div class="navbar">
+        <header>
+            <h1>MLB Database pages</h1>
+        </header>
+        <nav>
+            <p>
+                <a href="./">Home</a> --
+                <a href="./teams">Teams</a> -- 
+                <a href="./players">Players</a> --
+                <a href="./contracts">Contracts</a> --
+                <a href="./locations">Locations</a> --
+                <a href="./games">Games</a> --
+                <a href="./pitcher_boxscores">Pitcher Boxscores</a> --
+                <a href="./batter_boxscores">Batter Boxscores</a> --
+                <a href="./batbox-positions">Batter Boxscores has Positions</a> --
+                <a href="./positions">Positions</a>
+            </p>
+        </nav>
+    </div>
+    
+    <main class="main">
+        {{{body}}}
+    </main>
+    <br><br>
+    <footer>
+        &copy; <em>2023 Daniel Murray & Justo Triana</em>
+    </footer>
+</body>
+</html>

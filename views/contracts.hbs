@@ -1,0 +1,109 @@
+{{!-- contracts.hbs --}}
+
+{{!-- Additional content for this specific page --}}
+<h1>Contracts Table</h1>
+
+{{!-- Create a table --}}
+<table id="contracts-table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Contract ID</th>
+            <th>Team</th>
+            <th>Player Name</th>
+            <th>Start Date</th>
+            <th>Length (Years)</th>
+            <th>Total Value ($MM)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{!-- For each row, print the attributes, in order --}}
+        {{#each cData}}
+        <tr data-value={{this.contract_id}}>
+            <td><button onclick="fillContractToUpdate({{this.contract_id}})">Edit</button></td>
+            <td>{{this.contract_id}}</td>
+            <td>{{this.team_name}}</td>
+            <td>{{this.player_name}}</td>
+            <td>{{this.start_date_str}}</td>
+            <td>{{this.length_years}}</td>
+            <td>{{this.total_value}}</td>
+            <td><button onclick="deleteContract({{this.contract_id}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<script src="./js/update_contract.js"></script>
+<script src="./js/delete_contract.js"></script>
+
+{{!-- Form to search a record in the table  --}}
+<div id="search-contract-form-container"></div>
+    <h2>Search a for a player's contract using an HTML Form.</h2>
+    <p>Search by last name using the field below. Partial last names can be used too.</p>
+    <form id="search-contract-form-html" method='GET' action='/contracts'>
+        <label for="input-lname-search">Enter player(s) last name: </label>
+        <input type="text" name="lname_search" id="input-lname-html-search">
+        <input type="submit">
+        <a href='/'><button>Reset</button></a>
+    </form>
+</div>
+
+{{!-- Form to add a record to the table  --}}
+<div id="add-contract-form-container">
+    {{!-- Form to add a record to the table  --}}
+    <h2>Add a New Contract</h2>
+    <p>Enter the contract information below and click 'Submit' when ready.</p>
+    <form id="add-contract-form-ajax">
+        <label for="input-contract-team">Team Name:</label>
+            <select name="input-contract-team" id="input-contract-team" required>
+                <option value="">Select</option>
+                {{#each tData}}
+                <option value="{{this.team_name}}">{{this.team_name}}</option>
+                {{/each}}
+            </select>
+        <br><br>        
+        
+        <label for="input-contract-player">Player Name:</label>
+            <select name="input-contract-player" id="input-contract-player" required>
+                <option value="">Select</option>
+                {{#each pData}}
+                <option value="{{this.player_id}}">{{this.first_name}} {{this.last_name}}</option>
+                {{/each}}
+            </select>        
+        
+        <label for="input-contract-date">Contract Start Date:</label>
+        <input type="date" id="input-contract-date" name="input-contract-date">
+        
+        <label for="input-contract-length">Contract Length in Years:</label>
+        <input type="number" step="1" id="input-contract-length" name="input-contract-length" min=0>
+        <br><br>
+
+        <label for="input-contract-value">Contract Value in Millions of Dollars:</label>
+        <input type="number" step="0.01" id="input-contract-value" name="input-contract-value" min=0>
+        <br><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</div>
+<script src="./js/add_contract.js"></script>
+
+<div id="update-contract-form-container" class="hidden">
+    {{!-- Form to update a contract in the table  --}}
+    <h2>Update a Contract</h2>
+    <p>Enter the updates below and click 'Update' when ready.</p>
+    <form id="update-contract-form-ajax">
+        <label for="input-update-contract-team">Team Name:</label>
+            <select name="input-update-contract-team" id="input-update-contract-team" required>
+                <option value="">Select</option>
+                {{#each tData}}
+                <option value="{{this.team_name}}">{{this.team_name}}</option>
+                {{/each}}
+            </select>
+        <br><br>  
+        <label for="input-update-contract-length">Contract Length in Years:</label>
+        <input type="number" step="1" id="input-update-contract-length" name="input-update-contract-length" min=0>
+        <label for="input-update-contract-value">Contract Value in Millions of Dollars:</label>
+        <input type="number" step="0.01" id="input-update-contract-value" name="input-update-contract-value" min=0>
+        <br><br><br>
+        <input type="submit" value="Submit">
+    </form>

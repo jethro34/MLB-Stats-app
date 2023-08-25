@@ -1,0 +1,17 @@
+{
+  "name": "mlb",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Justo H Triana",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-handlebars": "^7.1.0",
+    "forever": "^0.14.2",
+    "mysql": "^2.18.1"
+  },
+  "description": ""
+}

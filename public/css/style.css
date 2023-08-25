@@ -1,0 +1,89 @@
+/* style.css */
+
+nav {
+  padding-left: 3%;
+}
+
+.navbar {
+  background-color: rgba(245, 245, 245, 0.9);
+  overflow: hidden;
+  padding: 0 5% 1%;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.main {
+  margin-top: 150px;
+  padding: 0 5%;
+}
+
+body {
+  font-size: medium;
+  background-image: url('/img/batter_profile.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center 130px;
+  max-width: 90%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+form {
+  display: block;
+  text-align: center;
+}
+
+table {
+  border-collapse: collapse;
+  border: 2px solid black;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.6);
+  margin-left: 80px;
+  width: auto;
+}
+
+table td, table th {
+  border: 2px solid black;
+  padding: 5px;
+}
+
+tr {
+  text-align: center;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding: 10px;
+  background-color: rgba(245, 245, 245, 0.9);
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hidden {
+  display: none;
+}
+
+.required {
+  color: red;
+  font-size: 80%;
+  position: relative;
+  top: -0.6em;
+  margin-left: 5px;
+}
+
+.styled-box {
+  font-size: 12px;
+  display: inline-block;
+  padding: 2px 7px 2px 7px;
+  border: .5px solid black;
+  border-radius: 5px;
+  background-color: white;
+}

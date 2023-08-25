@@ -1,0 +1,157 @@
+{{!-- games.hbs --}}
+
+<h1>Games Table</h1>
+<table id="games-table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>ID</th>
+            <th>Date & Time</th>
+            <th>Location</th>
+            <th>Away Team</th>
+            <th>Runs (A)</th>
+            <th>Home Team</th>
+            <th>Runs (H)</th>
+            <th>Winner</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{!-- print the attributes of each row, in order --}}
+        {{#each gData}}
+        <tr data-value={{this.game_id}}>
+            <td><button onclick="fillGameToUpdate({{this.game_id}})">Edit</button></td>
+            <td>{{this.game_id}}</td>
+            <td>{{this.date}}</td>
+            <td data-loc-id={{this.location_id}}>{{this.location}}</td>
+            <td>{{this.away_team}}</td>
+            <td>{{this.away_score}}</td>
+            <td>{{this.home_team}}</td>
+            <td>{{this.home_score}}</td>
+            <td>{{this.winner}}</td>
+            <td><button onclick="deleteGame({{this.game_id}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<script src="./js/update_game.js"></script>
+<script src="./js/delete_game.js"></script>
+
+<div id="search-game-form-container">
+    {{!-- Form to search a game in the table  --}}
+    <h2>Search a Game using an HTML Form.</h2>
+    <p>Search by team names using the fields below.</p>
+    <form id="search-game-form-html" method='GET' action='/games'>
+        <label for="input-awayt-search">Away team:</label>
+            <select name="awayt_search" id="input-awayt-search">
+                <option value="">Select</option>
+                {{#each tData}}
+                <option value="{{this.team_name}}">{{this.team_name}}</option>
+                {{/each}}
+            </select>
+        <label for="input-homet-search">Home team:</label>
+            <select name="homet_search" id="input-homet-search">
+                <option value="">Select</option>
+                {{#each tData}}
+                <option value="{{this.team_name}}">{{this.team_name}}</option>
+                {{/each}}
+            </select>
+        <input type="submit">
+        <a href='/'><button>Reset</button></a>
+    </form>
+</div>
+
+<div id="add-game-form-container">
+    {{!-- Form to add a record to the table  --}}
+    <h2>Add a New Game</h2>
+    <p>Enter the new game information below and click 'Submit' when ready.</p>
+    <form id="add-game-form-ajax">
+        <label for="input-game-date">Date and Time of Game:</label>
+        <input type="datetime-local" id="input-game-date" name="input-game-date">
+        <br><br>
+        <label for="input-game-awayt">Away Team:<span class="required">*</span></label>
+            <select name="input-game-awayt" id="input-game-awayt" required>
+                <option value="">Select</option>
+                {{#each tData}}
+                <option value="{{this.team_name}}">{{this.team_name}}</option>
+                {{/each}}
+            </select>
+        <label for="input-game-awayt-score">Away Team Score:</label>
+        <input type="number" id="input-game-awayt-score" name="input-game-awayt-score" value="" min=0>
+        <label for="input-game-homet">Home Team:<span class="required">*</span></label>
+            <select name="input-game-homet" id="input-game-homet" required>
+                <option value="">Select</option>
+                {{#each tData}}
+                <option value="{{this.team_name}}">{{this.team_name}}</option>
+                {{/each}}
+            </select>
+        <label for="input-game-homet-score">Home Team Score:</label>
+        <input type="number" id="input-game-homet-score" name="input-game-homet-score" value="" min=0>
+        <br><br>
+        <label for="input-game-location">Location:</label>
+            <select name="input-game-location" id="input-game-location">
+                <option value="">Select</option>
+                <option value="">Unknown</option>
+                {{#each lData}}
+                <option value={{this.location_id}}>{{this.stadium}} ({{this.city}}, {{this.state}})</option>
+                {{/each}}
+            </select>
+        <br><br>
+        <label for="input-game-away-winner">Is Away Team Winner?:</label>
+            <input type="radio" id="away-winner-hidden" name="input-game-away-winner" value="" style="display: none;" checked>
+            <input type="radio" id="away-winner-yes" name="input-game-away-winner" value="1">
+            <label for="away-winner-yes">Yes</label>
+            <input type="radio" id="away-winner-no" name="input-game-away-winner" value="0">
+            <label for="away-winner-no">No</label>
+        <br><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+<script src="./js/add_game.js"></script>
+
+<div id="update-game-form-container" class="hidden">
+    {{!-- Form to update a game in the table  --}}
+    <h2>Update a Game Form</h2>
+    <p>Enter the updated values and clik 'Update' when ready.</p>
+    <form id="update-game-form-ajax">
+        <label for="input-update-game-date">Date and Time of Game:</label>
+        <input type="datetime-local" id="input-update-game-date" name="input-update-game-date">
+        <br><br>
+        <label for="input-update-game-awayt">Away Team:<span class="required">*</span></label>
+            <select name="input-update-game-awayt" id="input-update-game-awayt" required>
+                <option value="">Select</option>
+                {{#each tData}}
+                <option value="{{this.team_name}}">{{this.team_name}}</option>
+                {{/each}}
+            </select>
+        <label for="input-update-game-awayt-score">Away Team Score:</label>
+        <input type="number" id="input-update-game-awayt-score" name="input-update-game-awayt-score" min=0>
+        <label for="input-update-game-homet">Home Team:<span class="required">*</span></label>
+            <select name="input-update-game-homet" id="input-update-game-homet" required>
+                <option value="">Select</option>
+                {{#each tData}}
+                <option value="{{this.team_name}}">{{this.team_name}}</option>
+                {{/each}}
+            </select>
+        <label for="input-update-game-homet-score">Home Team Score:</label>
+        <input type="number" id="input-update-game-homet-score" name="input-update-game-homet-score" min=0>
+        <br><br>
+        <label for="input-update-game-location">Location:</label>
+            <select name="input-update-game-location" id="input-update-game-location">
+                <option value="">Select</option>
+                <option value="">Unknown</option>
+                {{#each lData}}
+                <option value={{this.location_id}}>{{this.stadium}} ({{this.city}}, {{this.state}})</option>
+                {{/each}}
+            </select>
+        <br><br>
+        <label for="input-update-game-away-winner">Is Away Team Winner?:</label>
+            <input type="radio" id="input-update-away-winner-hidden" name="input-game-away-winner" value="" style="display: none;" checked>
+            <input type="radio" id="input-update-away-winner-yes" name="input-update-game-away-winner" value="1">
+            <label for="input-update-away-winner-yes">Yes</label>
+            <input type="radio" id="input-update-away-winner-no" name="input-update-game-away-winner" value="0">
+            <label for="input-update-away-winner-no">No</label>
+        <br><br><br>
+        <input type="submit" value="Update">
+    </form>
+</div>

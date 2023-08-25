@@ -1,0 +1,137 @@
+{{!-- pitcher_boxscores.hbs --}}
+
+{{!-- Additional content for this specific page --}}
+<h1>Pitcher Boxscores Table</h1>
+
+{{!-- Create a table --}}
+<table id="pitcher_boxscores-table">
+    <thead>
+        <tr>
+            <th>Pitcher Boxscore ID</th>
+            <th>Game ID</th>
+            <th>Player ID</th>
+            <th>Starter?</th>
+            <th>Innings Pitched</th>
+            <th>Earned Runs</th>
+            <th>Hits Allowed</th>
+            <th>Pitch Count</th>
+            <th>Strikes Thrown</th>
+            <th>Balls Thrown</th>
+            <th>Strikeouts</th>
+            <th>Walks</th>
+            <th>Winner?</th>
+            <th>Loser?</th>
+            <th>Save?</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{!-- For each row, print the attributes, in order --}}
+        {{#each pbData}}
+        <tr data-value={{this.pitch_boxscore_id}}>
+            <td>{{this.pitch_boxscore_id}}</td>
+            <td>{{this.game_id}}</td>
+            <td>{{this.player_id}}</td>
+            <td>{{this.is_starting_p}}</td>
+            <td>{{this.innings_pitched}}</td>
+            <td>{{this.earned_runs}}</td>
+            <td>{{this.hits_allowed}}</td>
+            <td>{{this.pitch_count}}</td>
+            <td>{{this.strike_pitches}}</td>
+            <td>{{this.ball_pitches}}</td>
+            <td>{{this.strikeouts_given}}</td>
+            <td>{{this.walks_given}}</td>
+            <td>{{this.is_winner}}</td>
+            <td>{{this.is_loser}}</td>
+            <td>{{this.is_save}}</td>
+            <td><button onclick="deletePitchBoxscore({{this.pitch_boxscore_id}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<script src="./js/delete_pitch_boxscore.js"></script>
+
+{{!-- Form to search a record in the table  --}}
+<h2>Search a for a player's game statistics using an HTML Form.</h2>
+<p>Search by last name and game date using the field below. Partial last names can be used too.</p>
+<form id="search-pboxscore-form-html" method='GET' action='/pitcher_boxscores'>
+    <label for="input-lname-search">Enter player(s) last name: </label>
+    <input type="text" name="lname_search" id="input-lname-html-search">
+    <label for="input-date-search">Enter game date: </label>
+    <input type="datetime-local" name="date_search" id="input-date-html-search" >
+    <input type="submit">
+    <a href='/'><button>Reset</button></a>
+</form>
+
+{{!-- Form to add a record to the table  --}}
+<div id="add-pboxscore-form-container">
+    {{!-- Form to add a record to the table  --}}
+    <h2>Add a New Pitcher Boxscore</h2>
+    <p>Enter the boxscore information below and click 'Submit' when ready.</p>
+    <form id="add-pboxscore-form-ajax">
+        <label for="input-pboxscore-game">Game ID:</label>
+            <select name="input-pboxscore-game" id="input-pboxscore-game" required>
+                <option value="">Select</option>
+                {{#each gData}}
+                <option value="{{this.game_id}}">{{this.game_id}}</option>
+                {{/each}}
+            </select>     
+       
+        <label for="input-pboxscore-player">Player Name:</label>
+            <select name="input-pboxscore-player" id="input-pboxscore-player" required>
+                <option value="">Select</option>
+                {{#each pData}}
+                <option value="{{this.player_id}}">{{this.first_name}} {{this.last_name}}</option>
+                {{/each}}
+            </select>        
+        <label for="input-pboxscore-is_starter">Did the player start?</label>
+            <input type="radio" id="pboxscore-start" name="input-pboxscore-is_starter" value="1" required>
+            <label for="pboxscore-start">Yes</label>
+            <input type="radio" id="pboxscore-bench" name="input-pboxscore-is_starter" value="0" required>
+            <label for="pboxscore-bench">No</label>
+        <br><br>
+        
+        <label for="input-pboxscore-innings">Innings Pitched:</label>
+        <input type="number" step=".1" id="input-pboxscore-innings" name="input-pboxscore-innings" min=0>
+
+        <label for="input-pboxscore-ER">Earned Runs:</label>
+        <input type="number" step="1" id="input-pboxscore-ER" name="input-pboxscore-ER" min=0>
+
+        <label for="input-pboxscore-H">Hits:</label>
+        <input type="number" step="1" id="input-pboxscore-H" name="input-pboxscore-H" min=0>
+        <br><br>
+
+        <label for="input-pboxscore-count">Pitch Count:</label>
+        <input type="number" step="1" id="input-pboxscore-count" name="input-pboxscore-count" min=0>
+
+        <label for="input-pboxscore-strikes">Strikes:</label>
+        <input type="number" step="1" id="input-pboxscore-strikes" name="input-pboxscore-strikes" min=0>
+        <br><br>
+        <label for="input-pboxscore-balls">Balls:</label>
+        <input type="number" step="1" id="input-pboxscore-balls" name="input-pboxscore-balls" min=0>
+        <label for="input-pboxscore-K">Strikeouts:</label>
+        <input type="number" step="1" id="input-pboxscore-K" name="input-pboxscore-K" min=0>
+        <label for="input-pboxscore-BB">Walks:</label>
+        <input type="number" step="1" id="input-pboxscore-BB" name="input-pboxscore-B" min=0>
+        <br><br>
+        <label for="input-pboxscore-is_winner">Did the pitcher record a win?</label>
+            <input type="radio" id="pboxscore-win" name="input-pboxscore-is_winner" value="1" required>
+            <label for="pboxscore-win">Yes</label>
+            <input type="radio" id="pboxscore-nowin" name="input-pboxscore-is_winner" value="0" required>
+            <label for="pboxscore-nowin">No</label>
+        <label for="input-pboxscore-is_loser">Did the pitcher record a loss?</label>
+            <input type="radio" id="pboxscore-loss" name="input-pboxscore-is_loser" value="1" required>
+            <label for="pboxscore-loss">Yes</label>
+            <input type="radio" id="pboxscore-noloss" name="input-pboxscore-is_loser" value="0" required>
+            <label for="pboxscore-noloss">No</label>
+        <br><br>
+        <label for="input-pboxscore-is_save">Did the pitcher record a save?</label>
+            <input type="radio" id="pboxscore-save" name="input-pboxscore-is_save" value="1" required>
+            <label for="pboxscore-save">Yes</label>
+            <input type="radio" id="pboxscore-nosave" name="input-pboxscore-is_save" value="0" required>
+            <label for="pboxscore-">No</label>
+        <br><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+<script src="./js/add_pitch_boxscore.js"></script>

@@ -1,0 +1,86 @@
+{{!-- batbox-positions.hbs --}}
+
+{{!-- Additional content for this specific page --}}
+<h1>Batter Boxscores has Positions Table</h1>
+
+{{!-- Create a table --}}
+<table id="batbox-positions-table">
+    {{!-- Header section --}}
+    <thead>
+        <tr>
+            <th></th>
+            <th>Batter Boxscores ID</th>
+            <th>Position</th>
+            <th></th>
+        </tr>
+    </thead>
+    {{!-- Body section --}}
+    <tbody>
+        {{!-- For each row, print the attributes, in order --}}
+        {{#each data}}
+        <tr data-value="{{this.bat_boxscore_id}}-{{this.position}}">
+            <td><button onclick="fillBBhPtoUpdate('{{this.bat_boxscore_id}}-{{this.position}}')">Edit</button></td>
+            <td>{{this.bat_boxscore_id}}</td>
+            <td>{{this.position}}</td>
+            <td><button onclick="deleteBatBoxHasPos('{{this.bat_boxscore_id}}-{{this.position}}')">Delete</button></td>
+        </tr>
+        {{/each}}
+
+    </tbody>
+</table>
+<script src="./js/update_batbox_position.js"></script>
+<script src="./js/delete_batbox_position.js"></script>
+
+<div id="search-batbox-pos-form-container">
+    {{!-- Form to search a record in the table  --}}
+    <h2>Search Boxscores to get its associated position(s) using an HTML Form.</h2>
+    <p>Search by Batter Boxscores ID using the field below.</p>
+    <form id="search-batbox-pos-form-html" method='GET' action='/batbox-positions'>
+        <label for="input-batbox-id-search">Enter the Batter Boxscores ID: </label>
+        <input type="number" name="batbox_id_search" id="input-batbox-id-search">
+        <input type="submit">
+        <a href='/'><button>Reset</button></a>
+    </form>
+</div>
+
+<div id="add-batbox-pos-form-container">
+    {{!-- Form to add a record to the table  --}}
+    <h2>Add a new Batter Boxscores with its associated Position</h2>
+    <p>Enter the new batter boxscores ID and its position below and click 'Submit' when ready.</p>
+    <form id="add-batbox-position-form-ajax">
+        <label for="input-batbox-pos-boxid">Batter Boxscore ID:</label>
+        <input type="number" id="input-batbox-pos-boxid" name="input-batbox-pos-boxid" min=1>
+        <br><br>
+        <label for="input-batbox-pos-pos">Position:</label>
+            <select name="input-batbox-pos-pos" id="input-batbox-pos-pos" required>
+                <option value="">Select</option>
+                {{#each positions}}
+                <option value="{{this.position}}">{{this.position}}</option>
+                {{/each}}
+            </select>
+        <br><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+<br><br>
+<script src="./js/add_batbox_position.js"></script>
+
+<div id="update-batbox-pos-form-container" class="hidden">
+    {{!-- Form to update a record to the table  --}}
+    <h2>Update a Batter Boxscores' associated Position</h2>
+    <p>Enter the Batter Boxscores ID and select its new Position below. Click 'Submit' when ready.</p>
+    <form id="update-batbox-position-form-ajax">        
+        <label>Updating Position associated to Batter Boxscore ID <span id="update-batbox-pos-batbox-id" class="styled-box"></span>.</label>
+        <br><br>
+        <label for="update-batbox-pos-pos">Position:</label>
+            <select name="update-batbox-pos-pos" id="update-batbox-pos-pos" required>
+                <option value="">Select</option>
+                {{#each positions}}
+                <option value="{{this.position}}">{{this.position}}</option>
+                {{/each}}
+            </select>
+        <br><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+<br><br><br>

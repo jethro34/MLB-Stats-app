@@ -1,0 +1,64 @@
+{{!-- locations.hbs --}}
+
+{{!-- Additional content for this specific page --}}
+<h1>Locations Table</h1>
+
+{{!-- Create a table --}}
+<table id="locations-table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Location ID</th>
+            <th>Stadium</th>
+            <th>City</th>
+            <th>State</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{!-- For each row, print the attributes, in order --}}
+        {{#each lData}}
+        <tr data-value={{this.location_id}}>
+            <td><button onclick="fillLocationToUpdate({{this.location_id}})">Edit</button></td>
+            <td>{{this.location_id}}</td>
+            <td>{{this.stadium}}</td>
+            <td>{{this.city}}</td>
+            <td>{{this.state}}</td>
+            <td><button onclick="deleteLocation({{this.location_id}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<script src="./js/delete_location.js"></script>
+<script src="./js/update_location.js"></script>
+
+{{!-- Form to add a record to the table  --}}
+<div id="add-location-form-container">
+    {{!-- Form to add a record to the table  --}}
+    <h2>Add a New Location</h2>
+    <p>Enter the location's information below and click 'Submit' when ready.</p>
+    <form id="add-location-form-ajax">
+        <label for="input-location-stadium">Stadium Name:</label>
+        <input type="text" name="input-location-stadium" id="input-location-stadium">     
+        <label for="input-location-city">City:</label>
+        <input type="text" name="input-location-city" id="input-location-city">
+        <br><br>
+        <label for="input-location-state">State:</label>
+        <input type="text" maxlength="2" name="input-location-state" id="input-location-state">
+        <br><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</div>
+<script src="./js/add_location.js"></script>
+
+<div id="update-location-form-container" class="hidden">
+    {{!-- Form to update a location in the table  --}}
+    <h2>Update a Location</h2>
+    <p>Enter the update below and click 'Update' when ready.</p>
+    <form id="update-location-form-ajax">
+        <label for="input-update-stadium">Stadium Name:</label>
+        <input type="text" id="input-update-stadium" name="input-update-stadium">
+        <br><br><br>
+        <input type="submit" value="Submit">
+    </form>

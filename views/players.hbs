@@ -1,0 +1,110 @@
+{{!-- players.hbs --}}
+
+{{!-- Additional content for this specific page --}}
+<h1>Players Table</h1>
+
+{{!-- Create a table --}}
+<table id="players-table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>ID</th>
+            <th>Last Name</th>
+            <th>First Name</th>
+            <th>DOB</th>
+            <th>Is Pitcher?</th>
+            <th>Hand</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{!-- For each row, print the attributes, in order --}}
+        {{#each pData}}
+        <tr data-value={{this.player_id}}>
+            <td><button onclick="fillPlayerToUpdate({{this.player_id}})">Edit</button></td>
+            <td>{{this.player_id}}</td>
+            <td>{{this.last_name}}</td>
+            <td>{{this.first_name}}</td>
+            <td>{{this.dob_str}}</td>
+            <td>{{this.pitcher}}</td>
+            <td>{{this.hand}}</td>
+            <td><button onclick="deletePlayer({{this.player_id}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<script src="./js/update_player.js"></script>
+<script src="./js/delete_player.js"></script>
+
+<div id="search-player-form-container">
+    {{!-- Form to search a player in the table  --}}
+    <h2>Search a Player using an HTML Form.</h2>
+    <p>Search by last name using the field below. Partial last names can be used too.</p>
+    <form id="search-player-form-html" method='GET' action='/players'>
+        <label for="input-lname-search">Enter player(s) last name: </label>
+        <input type="text" name="lname_search" id="input-lname-html-search">
+        <input type="submit">
+        <a href='/'><button>Reset</button></a>
+    </form>
+</div>
+
+<div id="add-player-form-container">
+    {{!-- Form to add a player to the table  --}}
+    <h2>Add a New Player</h2>
+    <p>Enter the new player information below and click 'Submit' when ready.</p>
+    <form id="add-player-form-ajax">
+        <label for="input-player-lname">Last Name:<span class="required">*</span></label>
+        <input type="text" id="input-player-lname" name="input-player-lname" pattern="[A-Za-z -.']+" title="Please enter letters, spaces, and hyphens only." required>
+        <label for="input-player-fname">First Name:<span class="required">*</span></label>
+        <input type="text" id="input-player-fname" name="input-player-fname" pattern="[A-Za-z -.']+" title="Please enter letters, spaces, and hyphens only." required>
+        <label for="input-player-dob">DOB:</label>
+        <input type="date" id="input-player-dob" name="input-player-dob">
+        <br><br>
+        <label for="input-player-pitcher">Is Pitcher?:</label>
+            <input type="radio" id="pitcher-hidden" name="input-player-pitcher" value="" style="display: none;" checked>
+            <input type="radio" id="pitcher-yes" name="input-player-pitcher" value="1">
+            <label for="pitcher-yes">Yes</label>
+            <input type="radio" id="pitcher-no" name="input-player-pitcher" value="0">
+            <label for="pitcher-no">No</label>
+        <br><br>
+        <label for="input-player-hand">Hand:</label>
+            <input type="radio" id="hiddy" name="input-player-hand" value="" style="display: none;" checked>
+            <input type="radio" id="lefty" name="input-player-hand" value="Left">
+            <label for="lefty">Left</label>
+            <input type="radio" id="righty" name="input-player-hand" value="Right">
+            <label for="righty">Right</label>
+        <br><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+<script src="./js/add_player.js"></script>
+
+<div id="update-player-form-container" class="hidden">
+    {{!-- Form to update a player in the table  --}}
+    <h2>Update a Player</h2>
+    <p>Enter the updates below and click 'Update' when ready.</p>
+    <form id="update-player-form-ajax">
+        <label for="input-update-player-lname">Last Name:<span class="required">*</span></label>
+        <input type="text" id="input-update-player-lname" name="input-update-player-lname" pattern="[A-Za-z -.']+" title="Please enter letters, spaces, and hyphens only." required>
+        <label for="input-update-player-fname">First Name:<span class="required">*</span></label>
+        <input type="text" id="input-update-player-fname" name="input-update-player-fname" pattern="[A-Za-z -.']+" title="Please enter letters, spaces, and hyphens only." required>
+        <label for="input-update-player-dob">DOB:</label>
+        <input type="date" id="input-update-player-dob" name="input-update-player-dob">
+        <br><br>
+        <label for="input-update-player-pitcher">Is Pitcher?:</label>
+            <input type="radio" id="update-pitcher-hidden" name="input-update-player-pitcher" value="" style="display: none;" checked>
+            <input type="radio" id="update-pitcher-yes" name="input-update-player-pitcher" value="1">
+            <label for="update-pitcher-yes">Yes</label>
+            <input type="radio" id="update-pitcher-no" name="input-update-player-pitcher" value="0">
+            <label for="update-pitcher-no">No</label>
+        <br><br>
+        <label for="input-update-player-hand">Hand:</label>
+            <input type="radio" id="update-hiddy" name="input-update-player-hand" value="" style="display: none;" checked>
+            <input type="radio" id="update-lefty" name="input-update-player-hand" value="Left">
+            <label for="update-lefty">Left</label>
+            <input type="radio" id="update-righty" name="input-update-player-hand" value="Right">
+            <label for="update-righty">Right</label>
+        <br><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</div>

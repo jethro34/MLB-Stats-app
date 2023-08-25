@@ -1,0 +1,26 @@
+{{!-- positions.hbs --}}
+
+{{!-- Additional content for this specific page --}}
+<h1>Positions Table</h1>
+
+{{!-- Create a table --}}
+<table id="positions-table">
+
+    {{!-- Header section --}}
+    <thead>
+        <tr>
+            <th>Positions</th>
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+        {{!-- For each row, print the attributes, in order --}}
+        {{#each data}}
+        <tr>
+            <td>{{this.position}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<br><br><br>

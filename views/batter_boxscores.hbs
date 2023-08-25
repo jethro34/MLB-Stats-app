@@ -1,0 +1,106 @@
+{{!-- batter_boxscores.hbs --}}
+
+{{!-- Additional content for this specific page --}}
+<h1>Batter Boxscores Table</h1>
+
+{{!-- Create a table --}}
+<table id="batter_boxscores-table">
+    <thead>
+        <tr>
+            <th>Batter Boxscore ID</th>
+            <th>Game ID</th>
+            <th>Player ID</th>
+            <th>Starter?</th>
+            <th>At Bats</th>
+            <th>Hits</th>
+            <th>Runs</th>
+            <th>Errors</th>
+            <th>Strikeouts</th>
+            <th>Walks</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{!-- For each row, print the attributes, in order --}}
+        {{#each bbData}}
+        <tr data-value={{this.bat_boxscore_id}}>
+            <td>{{this.bat_boxscore_id}}</td>
+            <td>{{this.game_id}}</td>
+            <td>{{this.player_id}}</td>
+            <td>{{this.is_starter}}</td>
+            <td>{{this.at_bats}}</td>
+            <td>{{this.hits}}</td>
+            <td>{{this.runs}}</td>
+            <td>{{this.errors}}</td>
+            <td>{{this.strikeouts}}</td>
+            <td>{{this.walks}}</td>
+            <td><button onclick="deleteBatBoxscore({{this.bat_boxscore_id}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<script src="./js/delete_bat_boxscore.js"></script>
+
+{{!-- Form to search a record in the table  --}}
+<h2>Search a for a player's game statistics using an HTML Form.</h2>
+<p>Search by last name and game date using the field below. Partial last names can be used too.</p>
+<form id="search-bboxscore-form-html" method='GET' action='/batter_boxscores'>
+    <label for="input-lname-search">Enter player(s) last name: </label>
+    <input type="text" name="lname_search" id="input-lname-html-search">
+    <label for="input-date-search">Enter game date: </label>
+    <input type="datetime-local" name="date_search" id="input-date-html-search" >
+    <input type="submit">
+    <a href='/'><button>Reset</button></a>
+</form>
+
+{{!-- Form to add a record to the table  --}}
+<div id="add-bboxscore-form-container">
+    {{!-- Form to add a record to the table  --}}
+    <h2>Add a New Batter Boxscore</h2>
+    <p>Enter the boxscore information below and click 'Submit' when ready.</p>
+    <form id="add-bboxscore-form-ajax">
+        <label for="input-bboxscore-game">Game ID:</label>
+            <select name="input-bboxscore-game" id="input-bboxscore-game" required>
+                <option value="">Select</option>
+                {{#each gData}}
+                <option value="{{this.game_id}}">{{this.game_id}}</option>
+                {{/each}}
+            </select>     
+       
+        <label for="input-bboxscore-player">Player Name:</label>
+            <select name="input-bboxscore-player" id="input-bboxscore-player" required>
+                <option value="">Select</option>
+                {{#each pData}}
+                <option value="{{this.player_id}}">{{this.first_name}} {{this.last_name}}</option>
+                {{/each}}
+            </select>        
+        <label for="input-bboxscore-is_starter">Did the player start?</label>
+            <input type="radio" id="bboxscore-start" name="input-bboxscore-is_starter" value="1" required>
+            <label for="bboxscore-start">Yes</label>
+            <input type="radio" id="bboxscore-bench" name="input-bboxscore-is_starter" value="0" required>
+            <label for="bboxscore-bench">No</label>
+        <br><br>
+        
+        <label for="input-bboxscore-at_bats">At Bats:</label>
+        <input type="number" step="1" id="input-bboxscore-at_bats" name="input-bboxscore-at_bats" min=0>
+
+        <label for="input-bboxscore-hits">Hits:</label>
+        <input type="number" step="1" id="input-bboxscore-hits" name="input-bboxscore-hits" min=0>
+
+        <label for="input-bboxscore-runs">Runs:</label>
+        <input type="number" step="1" id="input-bboxscore-runs" name="input-bboxscore-runs" min=0>
+        <br><br>
+
+        <label for="input-bboxscore-errors">Errors:</label>
+        <input type="number" step="1" id="input-bboxscore-errors" name="input-bboxscore-errors" min=0>
+
+        <label for="input-bboxscore-strikeouts">Strikeouts:</label>
+        <input type="number" step="1" id="input-bboxscore-strikeouts" name="input-bboxscore-strikeouts" min=0>
+        <br><br>
+        <label for="input-bboxscore-walks">Walks:</label>
+        <input type="number" step="1" id="input-bboxscore-walks" name="input-bboxscore-walks" min=0>
+        <br><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+<script src="./js/add_bat_boxscore.js"></script>

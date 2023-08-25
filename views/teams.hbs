@@ -1,0 +1,129 @@
+{{!-- teams.hbs --}}
+
+{{!-- Additional content for this specific page --}}
+<h1>Teams Table</h1>
+
+{{!-- Create a table --}}
+<table id="teams-table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Standings</th>
+            <th>Team Name</th>
+            <th>Division</th>
+            <th>Coach (Last Name)</th>
+            <th>Games Played</th>
+            <th>Games Won</th>
+            <th>Games Lost</th>
+            <th>Home Field</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print the attributes, in order --}}
+        {{#each tData}}
+        <tr data-value="{{this.team_name}}">
+            <td><button onclick="fillTeamToUpdate('{{this.team_name}}')">Edit</button></td>
+            <td>{{this.standings}}</td>
+            <td>{{this.team_name}}</td>
+            <td>{{this.division}}</td>
+            <td>{{this.coach_last_name}}</td>
+            <td>{{this.games_played}}</td>
+            <td>{{this.games_won}}</td>
+            <td>{{this.games_lost}}</td>
+            <td data-loc-id="{{this.home_field}}">{{this.location_str}}</td>
+            <td><button onclick="deleteTeam('{{this.team_name}}')">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<script src="./js/update_team.js"></script>
+<script src="./js/delete_team.js"></script>
+
+<div id="search-team-form-container">
+    {{!-- Form to search a player in the table  --}}
+    <h2>Search a Team using an HTML Form.</h2>
+    <p>Search by team name using the field below. Partial team names can be used too.</p>
+    <form id="search-team-form-html" method='GET' action='/teams'>
+        <label for="input-tname-search">Enter team name: </label>
+        <input type="text" name="tname_search" id="input-tname-html-search">
+        <input type="submit">
+        <a href='/'><button>Reset</button></a>
+    </form>
+</div>
+
+<div id="add-team-form-container">
+    {{!-- Form to add a record to the table  --}}
+    <h2>Add a New Team</h2>
+    <p>Enter the new team information below and click 'Submit' when ready.</p>
+    <form id="add-team-form-ajax">
+        <label for="input-team-name">Team Name:<span class="required">*</span></label>
+        <input type="text" id="input-team-name" name="input-team-name" pattern="[A-Za-z -.']+" title="Please enter letters, spaces, and hyphens only." required>
+        <label for="input-team-division">Division:</label>
+            <input type="radio" id="division-hidden" name="input-team-division" value="" style="display: none;" checked>
+            <input type="radio" id="division-al" name="input-team-division" value="AL">
+            <label for="division-al">AL</label>
+            <input type="radio" id="division-nl" name="input-team-division" value="NL">
+            <label for="division-nl">NL</label>
+        <label for="input-team-coach">Coach Last Name:</label>
+        <input type="text" id="input-team-coach" name="input-team-coach" pattern="[A-Za-z -.']+" title="Please enter letters, spaces, and hyphens only." value="">
+        <br><br>
+        <label for="input-team-games-played">Games Played:</label>
+        <input type="number" id="input-team-games-played" name="input-team-games-played" min="0" value="">
+        <label for="input-team-games-won">Games Won:</label>
+        <input type="number" id="input-team-games-won" name="input-team-games-won" min="0" value="">
+        <label for="input-team-games-lost">Games Lost:</label>
+        <input type="number" id="input-team-games-lost" name="input-team-games-lost" min="0" value="">
+        <label for="input-team-home-location">Home Field:<span class="required">*</span></label>
+            <select name="input-team-home-location" id="input-team-home-location" required>
+                <option value="">Select</option>
+                {{#each lData}}
+                <option value="{{this.location_id}}">{{this.stadium}} ({{this.city}}, {{this.state}})</option>
+                {{/each}}
+            </select>
+        <br><br>
+        <label for="input-team-standings">Standings:</label>
+            <input type="number" id="input-team-standings" name="input-team-standings" min="0" value="">
+        <br><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+<script src="./js/add_team.js"></script>
+
+<div id="update-team-form-container" class="hidden">
+    {{!-- Form to update a record in the table  --}}
+    <h2>Update a Team</h2>
+    <p>Enter the updates below and click 'Submit' when ready.</p>
+    <form id="update-team-form-ajax">
+        <label for="input-update-team-division">Division:</label>
+            <input type="radio" id="update-division-hidden" name="input-update-team-division" value="" style="display: none;" checked>
+            <input type="radio" id="update-division-al" name="input-update-team-division" value="AL">
+            <label for="update-division-al">AL</label>
+            <input type="radio" id="update-division-nl" name="input-update-team-division" value="NL">
+            <label for="update-division-nl">NL</label>
+        <label for="input-update-team-coach">Coach Last Name:</label>
+        <input type="text" id="input-update-team-coach" name="input-update-team-coach" pattern="[A-Za-z -']+" title="Please enter letters, spaces, and hyphens only." value="">
+        <br><br>
+        <label for="input-update-team-gplayed">Games Played:</label>
+        <input type="number" id="input-update-team-gplayed" name="input-update-team-gplayed" min="0" value="">
+        <label for="input-update-team-gwon">Games Won:</label>
+        <input type="number" id="input-update-team-gwon" name="input-update-team-gwon" min="0" value="">
+        <label for="input-update-team-glost">Games Lost:</label>
+        <input type="number" id="input-update-team-glost" name="input-update-team-glost" min="0" value="">
+        <label for="input-update-team-homeloc">Home Field:<span class="required">*</span></label>
+            <select name="input-update-team-homeloc" id="input-update-team-homeloc" required>
+                <option value="">Select</option>
+                {{#each lData}}
+                <option value="{{this.location_id}}">{{this.stadium}} ({{this.city}}, {{this.state}})</option>
+                {{/each}}
+            </select>
+        <br><br>
+        <label for="input-update-team-standings">Standings:</label>
+            <input type="number" id="input-update-team-standings" name="input-update-team-standings" min="0" value="">
+        <br><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</div>
